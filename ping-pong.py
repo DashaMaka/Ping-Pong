@@ -28,6 +28,9 @@ class Player(GameSprite):
             self.rect.y += self.speed
 platform1 = Player('платформа 1.png',20,300,30,90,10)
 platform2 = Player('платформа 2.png',930,300,30,90,10)
+ball = GameSprite('мячь.png', 470,330,50,50,5)
+s_x = 5
+s_y = 5
 game = True
 while game:
     clock.tick(60)
@@ -36,6 +39,17 @@ while game:
     platform1.reset()
     platform2.move()
     platform2.reset()
+    ball.rect.x += s_x
+    ball.rect.y += s_y
+    if ball.rect.y >= 650:
+        s_y *= -1
+    if ball.rect.y <= 0:
+        s_y *= -1
+    if sprite.collide_rect(ball,platform1):
+        s_x *= -1
+    if sprite.collide_rect(ball,platform2):
+        s_x *= -1
+    ball.reset()
     for e in event.get():
         if e.type == QUIT:
             game = False
